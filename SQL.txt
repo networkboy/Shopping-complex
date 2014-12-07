@@ -1,0 +1,51 @@
+create table  users(
+userid int not null primary key auto_increment,
+username varchar(30) not null unique,
+truename varchar(30) not null,
+passwd   varchar(30) not null,
+email	varchar(40) not null,
+phone   varchar(20) not null, 
+address varchar(30) not null, 
+postcode char(6) not null,
+grade	int   default 5 
+)
+
+
+create table goods (
+goodsId int not null primary key auto_increment,
+goodsName varchar(40) ,
+goodsIntro varchar(500),
+goodsPrice float ,
+goodsNum int ,
+publisher varchar(40),
+photo varchar(40),
+type varchar(10)
+)
+insert into goods values( '1','xml 30 ','这是一本xml 30  ', 30, 1, 'xml 30 ','01.jpg','xml 30 ')
+insert into goods values( '2','java 40 ','这是一本java 40  ', 40, 1, 'java 40 ','02.jpg','java 40 ')
+insert into goods values( '3','c++ 40','这是一本c++ ', 40, 1, 'C++','03.jpg','C++')
+insert into goods values( '4','C 50 ','这是一本C 50  ', 50, 1, 'C 50 ','05.jpg','C 50 ')
+insert into goods values( '5','java2 50 ','这是一本java2 50  ',50, 1, 'java2 50 ','04.jpg','java2 50 ')
+insert into goods values( '6','web 50 ','这是一本web 50  ',50, 1, 'web 50','06.jpg','web 50')
+
+
+--应该这样去设计订单表
+create table orders(
+	ordersId int not null primary key auto_increment,
+	orderDate datetime ,
+	payMode varchar(20),
+	isPayed bit,
+	totalPrice float not null,
+	userId int,
+	foreign key(userId) references users(userId) on delete cascade on update cascade
+)
+
+
+--订单细节表
+create table orderDetail(
+	ordesIid int,
+	foreign key(ordesIid) references orders(ordersId) on delete cascade on update cascade,
+   goodsId int,
+   foreign key(goodsId) references goods(goodsId) on delete cascade on update cascade,
+	nums int not null
+)
